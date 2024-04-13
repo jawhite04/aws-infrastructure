@@ -18,13 +18,11 @@
 	- target account: variable
 	- given an account,
 		- configure AWS IAM OIDC Provider to work with GitHub JWT generated during job runtime
-4. terraform project "aws-org-bootstrap"
-	- goal: enable working with AWS Organizations
+4. terraform project "aws-org-manage"
+	- goals: 
+		- enable working with AWS Organizations
+		- the means to create & manage OUs
 	- target account: root account
 	- enable orgs
-	- this space also should be used to configure anything global to all orgs
-5. terraform project "aws-org-manage"
-	- goal: the means to create & manage OUs
-	- target account: root account
 	- Create OUs
 	- Manage OUs
