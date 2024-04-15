@@ -21,8 +21,11 @@
 4. terraform project "aws-org-manage"
 	- goals: 
 		- enable working with AWS Organizations
-		- the means to create & manage OUs
+		- create & manage logical OUs
+		- create & manage purposeful accounts
 	- target account: root account
 	- enable orgs
 	- Create OUs
 	- Manage OUs
+	- Create accounts
+	- Manage accounts
