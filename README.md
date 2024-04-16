@@ -29,3 +29,6 @@
 	- Manage OUs
 	- Create accounts
 	- Manage accounts
+5. terraform project "aws-dns-manage"
+	- goal: create & manage route53 hosted zone, ssl certificate for domain
+	- target account: root account
