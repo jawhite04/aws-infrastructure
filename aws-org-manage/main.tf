@@ -9,9 +9,11 @@ resource "aws_organizations_organization" "root" {
   ]
 
   aws_service_access_principals = [
-    "sso.amazonaws.com" # IAM Identity Center 
+    "sso.amazonaws.com",    # IAM Identity Center
+    "account.amazonaws.com" # Account Management
   ]
 }
 
 # manage organizations in `organizations.tf`
 # manage accounts in `accounts.tf`
+# manage users in `iam.tf`

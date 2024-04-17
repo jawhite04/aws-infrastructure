@@ -6,6 +6,11 @@ resource "aws_organizations_organizational_unit" "sandboxes" {
   parent_id = aws_organizations_organization.root.roots[0].id
 }
 
+resource "aws_organizations_organizational_unit" "jawhite04_domains" {
+  name      = "jawhite04-domains"
+  parent_id = aws_organizations_organization.root.roots[0].id
+}
+
 resource "aws_organizations_organizational_unit" "suspended" {
   name      = "suspended"
   parent_id = aws_organizations_organization.root.roots[0].id
