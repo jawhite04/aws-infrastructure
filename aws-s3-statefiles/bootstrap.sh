@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 set -e
-bucket_name="terraform-statefiles-$AWS_ACCOUNT"
 
 if [ -z "$AWS_ACCOUNT" ]; then
   echo "AWS_ACCOUNT is not set. Exiting."
   exit 1
 fi
+
+bucket_name="terraform-statefiles-$AWS_ACCOUNT"
+export TF_VAR_aws_account=$AWS_ACCOUNT
 
 if ! terraform --version > /dev/null 2>&1; then
   echo "Terraform is not installed. Exiting."
