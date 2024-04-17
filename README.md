@@ -3,8 +3,8 @@
 # master plan
 
 1. manually create root aws account
-	  - create a non-root user in the root account
-	  - create access key & secret access key for non-root user
+	  - create a AdministratorAccess user in the root account
+	  - create access key & secret access key for this user
 		  - allows deployment of resources to the root account
 2. terraform project "aws-s3-statefiles"
 	- goal: give statefiles a place to live
