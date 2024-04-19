@@ -7,7 +7,7 @@ echo
 echo "Creating DNS zones..."
 echo
 
-terraform -chdir=zones init "$(backend_config)"
+terraform -chdir=zones init --backend-config "bucket=terraform-statefiles-$AWS_ACCOUNT"
 terraform -chdir=zones apply --auto-approve
 
 echo
@@ -28,14 +28,14 @@ echo
 echo "Creating certificates for domains, validating DNS + certificates..."
 echo
 
-terraform -chdir=validation init "$(backend_config)"
+terraform -chdir=validation init --backend-config "bucket=terraform-statefiles-$AWS_ACCOUNT"
 terraform -chdir=validation apply --auto-approve
 
 echo
 echo "Creating permanent redirects..."
 echo
 
-terraform -chdir=redirects init "$(backend_config)"
+terraform -chdir=redirects init --backend-config "bucket=terraform-statefiles-$AWS_ACCOUNT"
 terraform -chdir=redirects apply --auto-approve
 
 echo "DNS configuration has completed."
