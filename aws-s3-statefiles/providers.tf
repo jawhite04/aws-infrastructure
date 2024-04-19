@@ -6,8 +6,9 @@ terraform {
     }
   }
   backend "s3" {
-    key    = "aws-s3-statefiles/terraform.tfstate"
-    region = "us-east-1"
+    key     = "aws-s3-statefiles/terraform.tfstate"
+    region  = "us-east-1"
+    profile = "management-account"
   }
 }
 
