@@ -1,18 +1,48 @@
-Discussion of deployed resources [here](https://chat.openai.com/share/4d60e1cb-a7d6-4485-a7ec-470b1d336285).
+# AWS DNS Management
 
-# Required Manual Steps
-- Configure Route 53
-    - `terraform apply`
-    - A successful `apply` will output `nameservers` which are useful in a subsequent step.
+## `apply-all.sh`
 
-- Log in to Squarespace:
-    - Navigate to your account and select "Domains."
-    - Choose the domain you want to manage.
-- Navigate to DNS Settings:
-    - Find the section for managing or configuring DNS and select the option to manage or change nameservers.
-- Update Nameservers:
-    - Replace the existing nameservers with the `nameservers` output provided by AWS Route 53 after you create the hosted zones.
-    - Save the changes. Note that DNS changes can take some time to propagate, typically up to 48 hours.
+Runs the deployments that follow. Pauses for manual steps.
 
-- Verify Changes:
-    - After updating the nameservers and allowing some time for propagation, use tools like nslookup or dig to ensure that your domains are resolving to the new AWS nameservers correctly.
+## Deploy zones for domains
+
+```bash
+cd zones
+terraform init $(backend_config)
+terraform apply
+cd ..
+```
+
+## Configure Squarespace-managed domains to use AWS Route 53 DNS
+
+This is a required manual step which must occur before certificates can be issued to the domains. Subsequent steps require issued certificates.
+
+[https://account.squarespace.com/domains](https://account.squarespace.com/domains)
+
+For each domain:
+1. Select the domain
+1. DNS -> DNS Settings -> Squarespace Defaults -> 🗑️
+1. DNS -> Domain Nameservers -> Use Custom Nameservers
+1. enter terraform output for the respective domain
+
+![Use Custom Nameservers](.readme/squarespace-custom-nameservers.png)
+
+## Configure domain certificates & domain validation
+
+```bash
+cd validation
+terraform init $(backend_config)
+terraform apply
+cd ..
+```
+
+## Configure redirects
+
+Set `jawhite04.net` and `jawhite04.org` to 301 Permanent Redirect to `jawhite04.com`.
+
+```bash
+cd redirects
+terraform init $(backend_config)
+terraform apply
+cd ..
+```
