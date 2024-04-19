@@ -1,14 +1,9 @@
 #######################
 # JAW DNS Manager
 #######################
-resource "aws_iam_user" "jawhite04_dns_manager_route53_user" {
+resource "aws_iam_policy" "route53_contributor_policy" {
   provider = aws.jawhite04_dns_manager
-  name     = "route53-user"
-}
-
-resource "aws_iam_policy" "route53_user_policy" {
-  provider = aws.jawhite04_dns_manager
-  name     = "Route53FullAccess"
+  name     = "Route53ContributorAccess"
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
@@ -19,8 +14,25 @@ resource "aws_iam_policy" "route53_user_policy" {
   })
 }
 
-resource "aws_iam_user_policy_attachment" "route53_user_policy" {
+resource "aws_iam_role" "route53_contributor_role" {
+  provider = aws.jawhite04_dns_manager
+  name     = "route53-contributor"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          AWS = ["arn:aws:iam::${aws_organizations_organization.root.master_account_id}:root"]
+        },
+        Action = "sts:AssumeRole",
+      },
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "route53_policy_attach" {
   provider   = aws.jawhite04_dns_manager
-  user       = aws_iam_user.jawhite04_dns_manager_route53_user.name
-  policy_arn = aws_iam_policy.route53_user_policy.arn
+  role       = aws_iam_role.route53_contributor_role.name
+  policy_arn = aws_iam_policy.route53_contributor_policy.arn
 }
