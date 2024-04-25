@@ -6,11 +6,26 @@ resource "aws_iam_policy" "route53_contributor_policy" {
   name     = "Route53ContributorAccess"
   policy = jsonencode({
     Version = "2012-10-17"
-    Statement = [{
-      Action   = "route53:*"
-      Effect   = "Allow"
-      Resource = "*"
-    }]
+    Statement = [
+      {
+        Effect = "Deny"
+        Action = [
+          "route53:CreateHostedZone",
+          "route53:DeleteHostedZone",
+          "route53:UpdateHostedZoneComment"
+        ]
+        Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "route53:ChangeResourceRecordSets",
+          "route53:ListResourceRecordSets",
+          "route53:GetChange"
+        ]
+        Resource = "arn:aws:route53:::hostedzone/*"
+      }
+    ]
   })
 }
 
