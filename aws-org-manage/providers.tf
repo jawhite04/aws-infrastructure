@@ -55,3 +55,14 @@ provider "aws" {
     session_name = "TerraformDeployment"
   }
 }
+
+provider "aws" {
+  # for creating users in the com-jawhite04 account
+  alias   = "com_jawhite04"
+  region  = "us-east-1"
+  profile = "management-account"
+  assume_role {
+    role_arn     = "arn:aws:iam::${aws_organizations_account.jawhite04_dns_manager.id}:role/OrganizationAccountAccessRole"
+    session_name = "TerraformDeployment"
+  }
+}
