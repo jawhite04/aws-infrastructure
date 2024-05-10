@@ -27,11 +27,13 @@ resource "aws_organizations_policy" "suspended_deny_all" {
   content = <<POLICY
 {
   "Version": "2012-10-17",
-  "Statement": [{
-    "Effect": "Deny",
-    "Action": "*",
-    "Resource": "*"
-  }]
+  "Statement": [
+    {
+      "Effect": "Deny",
+      "Action": "*",
+      "Resource": "*"
+    }
+  ]
 }
 POLICY
 }
