@@ -62,7 +62,7 @@ provider "aws" {
   region  = "us-east-1"
   profile = "management-account"
   assume_role {
-    role_arn     = "arn:aws:iam::${aws_organizations_account.jawhite04_dns_manager.id}:role/OrganizationAccountAccessRole"
+    role_arn     = "arn:aws:iam::${aws_organizations_account.com_jawhite04.id}:role/OrganizationAccountAccessRole"
     session_name = "TerraformDeployment"
   }
 }
