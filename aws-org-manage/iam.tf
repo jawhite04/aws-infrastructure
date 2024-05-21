@@ -21,9 +21,24 @@ resource "aws_iam_policy" "route53_contributor_policy" {
         Action = [
           "route53:ChangeResourceRecordSets",
           "route53:ListResourceRecordSets",
-          "route53:GetChange"
+          "route53:ListTagsForResource",
+          "route53:GetHostedZone"
         ]
         Resource = "arn:aws:route53:::hostedzone/*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "route53:GetChange"
+        ]
+        Resource = "arn:aws:route53:::change/*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "route53:ListHostedZones"
+        ]
+        Resource = "*"
       }
     ]
   })
