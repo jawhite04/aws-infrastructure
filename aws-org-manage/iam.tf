@@ -39,6 +39,16 @@ resource "aws_iam_policy" "route53_contributor_policy" {
           "route53:ListHostedZones"
         ]
         Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "acm:ListCertificates",
+          "acm:DescribeCertificate",
+          "acm:GetCertificate",
+          "acm:ListTagsForCertificate"
+        ]
+        Resource = "*"
       }
     ]
   })
