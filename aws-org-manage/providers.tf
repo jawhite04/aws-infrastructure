@@ -23,17 +23,6 @@ provider "aws" {
   profile = "management-account"
 }
 
-# provider "aws" {
-#   # for creating users in the liine takehome account
-#   alias   = "liine_take_home"
-#   region  = "us-east-1"
-#   profile = "management-account"
-#   assume_role {
-#     role_arn     = "arn:aws:iam::${aws_organizations_account.liine_take_home.id}:role/OrganizationAccountAccessRole"
-#     session_name = "TerraformDeployment"
-#   }
-# }
-
 provider "aws" {
   # for creating users in the sandbox account
   alias   = "aws_sandbox"
