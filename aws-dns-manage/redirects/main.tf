@@ -28,19 +28,22 @@ resource "aws_s3_bucket_website_configuration" "org_redirect_bucket" {
   bucket = aws_s3_bucket.org_redirect_bucket.bucket
   redirect_all_requests_to {
     host_name = local.redirect_target
-    protocol  = "https"
   }
+}
+
+resource "aws_cloudfront_origin_access_identity" "org_redirect" {
+  comment = "OAI for jawhite04.org redirect"
 }
 
 resource "aws_cloudfront_distribution" "org_redirect" {
   origin {
-    domain_name = aws_s3_bucket.org_redirect_bucket.bucket_regional_domain_name
+    domain_name = aws_s3_bucket_website_configuration.org_redirect_bucket.website_endpoint
     origin_id   = "S3-${aws_s3_bucket.org_redirect_bucket.id}"
 
     custom_origin_config {
       http_port              = 80
       https_port             = 443
-      origin_protocol_policy = "https-only"
+      origin_protocol_policy = "http-only"
       origin_ssl_protocols   = ["TLSv1.2"]
     }
   }
@@ -55,7 +58,7 @@ resource "aws_cloudfront_distribution" "org_redirect" {
   default_cache_behavior {
     target_origin_id       = "S3-${aws_s3_bucket.org_redirect_bucket.id}"
     viewer_protocol_policy = "redirect-to-https"
-    allowed_methods        = ["GET", "HEAD"]
+    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
     cached_methods         = ["GET", "HEAD"]
 
     forwarded_values {
@@ -78,8 +81,7 @@ resource "aws_cloudfront_distribution" "org_redirect" {
 
   restrictions {
     geo_restriction {
-      restriction_type = "whitelist"
-      locations        = ["US", "CA", "GB"]
+      restriction_type = "none"
     }
   }
 
@@ -118,19 +120,22 @@ resource "aws_s3_bucket_website_configuration" "net_redirect_bucket" {
   bucket = aws_s3_bucket.net_redirect_bucket.bucket
   redirect_all_requests_to {
     host_name = local.redirect_target
-    protocol  = "https"
   }
+}
+
+resource "aws_cloudfront_origin_access_identity" "net_redirect" {
+  comment = "OAI for jawhite04.net redirect"
 }
 
 resource "aws_cloudfront_distribution" "net_redirect" {
   origin {
-    domain_name = aws_s3_bucket.net_redirect_bucket.bucket_regional_domain_name
+    domain_name = aws_s3_bucket_website_configuration.net_redirect_bucket.website_endpoint
     origin_id   = "S3-${aws_s3_bucket.net_redirect_bucket.id}"
 
     custom_origin_config {
       http_port              = 80
       https_port             = 443
-      origin_protocol_policy = "https-only"
+      origin_protocol_policy = "http-only"
       origin_ssl_protocols   = ["TLSv1.2"]
     }
   }
@@ -145,7 +150,7 @@ resource "aws_cloudfront_distribution" "net_redirect" {
   default_cache_behavior {
     target_origin_id       = "S3-${aws_s3_bucket.net_redirect_bucket.id}"
     viewer_protocol_policy = "redirect-to-https"
-    allowed_methods        = ["GET", "HEAD"]
+    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
     cached_methods         = ["GET", "HEAD"]
 
     forwarded_values {
@@ -168,8 +173,7 @@ resource "aws_cloudfront_distribution" "net_redirect" {
 
   restrictions {
     geo_restriction {
-      restriction_type = "whitelist"
-      locations        = ["US", "CA", "GB"]
+      restriction_type = "none"
     }
   }
 
