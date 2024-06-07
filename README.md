@@ -1,6 +1,6 @@
 # aws-infrastructure
 
-# master plan
+## the plan
 
 1. manually create root aws account
 	  - create a AdministratorAccess user in the root account
