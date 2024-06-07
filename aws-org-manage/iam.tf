@@ -49,6 +49,13 @@ resource "aws_iam_policy" "route53_contributor_policy" {
           "acm:ListTagsForCertificate"
         ]
         Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "kms:*"
+        ]
+        Resource = "*"
       }
     ]
   })
