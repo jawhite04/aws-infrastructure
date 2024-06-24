@@ -79,3 +79,14 @@ module "com_jawhite04_bucket" {
     time_sleep.wait_for_account_creation
   ]
 }
+
+module "com_jawhite04_vpc" {
+  source = "./modules/default-vpc"
+  providers = {
+    aws.target = aws.com_jawhite04
+  }
+
+  depends_on = [
+    time_sleep.wait_for_account_creation
+  ]
+}
